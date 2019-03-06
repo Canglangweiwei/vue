@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,13 +8,14 @@
   <title>Document</title>
   <script src="./lib/vue.min.js"></script>
 </head>
+
 <body>
   <div id="app">
     <ul v-if="list.length > 0" :style="liStyle">
       <div v-for="(item, index) in list" :key="index">
-          <li v-show="item.age > 18">
-              姓名：{{item.name}}，年龄：{{item.age}}，位于数组中第：{{index}}
-          </li>
+        <li v-show="item.age > 18">
+          姓名：{{item.name}}，年龄：{{item.age}}，位于数组中第：{{index}}
+        </li>
       </div>
     </ul>
   </div>
@@ -51,4 +53,5 @@
     });
   </script>
 </body>
+
 </html>
