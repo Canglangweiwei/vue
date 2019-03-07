@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>动态绑定CSS样式</title>
+  <link rel="stylesheet" href="./css/8.css">
+  <script src="./lib/vue.min.js"></script>
+</head>
+
+<body>
+  <div id="app">
+    <h1>动态 CSS Class</h1>
+
+    <h2>示例 1</h2>
+    <!-- <div :class="{changeColor:changeColor, changeLength:changeLength}"
+      @click="changeColor = !changeColor, cha ngeLength = !changeLength">
+      <span>Henry</span>
+    </div> -->
+
+    <h2>示例 2</h2>
+    <button @click="changeColor = !changeColor">change color</button>
+    <button @click="changeLength = !changeLength">change length</button>
+    <div :class="compClasses">
+      <span>Henry</span>
+    </div>
+  </div>
+
+  <script src="./js/8.js"></script>
+</body>
+
+</html>
