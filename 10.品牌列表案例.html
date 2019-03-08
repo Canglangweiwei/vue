@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>品牌列表案例</title>
+  <script src="./lib/vue.min.js"></script>
+  <!-- <link rel="stylesheet" href="./css/bootstrap.min.css"> -->
+  <link href="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+  <!-- <link href="https://cdn.bootcss.com/bootstrap-material-design/4.0.2/bootstrap-material-design.min.css"
+    rel="stylesheet"> -->
+  <style>
+    .panel-heading {
+      height: 44px;
+      background-color: cornflowerblue;
+    }
+
+    .panel-heading h3 {
+      color: white;
+      margin-left: 10px;
+      padding-top: 3px;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="app">
+    <div class="panel panel-primary">
+      <div class="panel-heading">
+        <h3 class="panel-title">添加品牌</h3>
+      </div>
+
+      <div class="panel-body form-inline" style="margin-top:10px;">
+        <label style="margin-left:10px;">
+          序号：
+          <input type="text" class="form-control" v-model="id">
+        </label>
+
+        <label style="margin-left:10px;">
+          车名：
+          <input type="text" class="form-control" v-model="name">
+        </label>
+
+        <!--添加 -->
+        <input type="button" value="添加" class="btn btn-primary" @click="add" style="margin-left:10px;">
+
+        <!-- 搜索关键字 -->
+        <label style="margin-left:10px;">
+          搜索关键字：
+          <input type="text" class="form-control" v-model="keywords">
+        </label>
+      </div>
+    </div>
+
+    <table class="table table-bordered table-hover table-striped" style="margin-top:10px;">
+      <thead>
+        <tr>
+          <th>序号</th>
+          <th>车名</th>
+          <th>时间</th>
+          <th>操作</th>
+        </tr>
+      </thead>
+      <tbody v-for="(item, index) in list" :key="index">
+        <tr>
+          <td>{{ item.id }}</td>
+          <td>{{ item.name }}</td>
+          <td>{{ item.ctime }}</td>
+          <td>
+            <a href="" @click.prevent="delForId(item.id)">删除</a>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <script>
+    var vm = new Vue({
+      el: '#app',
+      data: {
+        id: '',
+        name: '',
+        keywords: '',
+        list: [
+          { id: 1, name: '奔驰', ctime: new Date() },
+          { id: 2, name: '宝马', ctime: new Date() },
+          { id: 3, name: '奥迪', ctime: new Date() }
+        ]
+      },
+      methods: {
+        add() {
+          var car = { id: this.id, name: this.name, ctime: new Date() };
+          this.list.push(car);
+          // 清空数据
+          this.id = this.name = '';
+        },
+
+        // 下面提供了两种删除方式：
+        // 1、直接根据下标删除数据（更简单）
+        del(index) {
+          // 根据下标删除数据
+          this.list.splice(index, 1);
+        },
+
+        // 2、根据ID查询出数据在列表中的下标，然后删除（多了一步遍历查询过程，复杂一些）
+        delForId(id) {
+          // 1、some(遍历数据)
+          // this.list.some((item, index) => {
+          //   if (item.id == id) {
+          //     this.list.splice(index, 1);
+          //     return true;
+          //   }
+          // });
+          // 2、findIndex（专门提供用来查询索引，功能比较单一）
+          var index = this.list.findIndex(item => {
+            if (item.id == id) {
+              return true;
+            }
+          });
+          this.list.splice(index, 1);
+        }
+      },
+
+      watch() {
+
+      }
+    });
+  </script>
+</body>
+
+</html>
