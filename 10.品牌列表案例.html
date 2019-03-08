@@ -7,27 +7,12 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>品牌列表案例</title>
   <script src="./lib/vue.min.js"></script>
-  <!-- <link rel="stylesheet" href="./css/bootstrap.min.css"> -->
-  <link href="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
-  <!-- <link href="https://cdn.bootcss.com/bootstrap-material-design/4.0.2/bootstrap-material-design.min.css"
-    rel="stylesheet"> -->
-  <style>
-    .panel-heading {
-      height: 44px;
-      background-color: cornflowerblue;
-    }
-
-    .panel-heading h3 {
-      color: white;
-      margin-left: 10px;
-      padding-top: 3px;
-    }
-  </style>
+  <link rel="stylesheet" href="./css/bootstrap-3.3.7.css">
 </head>
 
 <body>
   <div id="app">
-    <div class="panel panel-primary">
+    <div class="panel panel-primary" style="margin: 5px;">
       <div class="panel-heading">
         <h3 class="panel-title">添加品牌</h3>
       </div>
@@ -54,7 +39,7 @@
       </div>
     </div>
 
-    <table class="table table-bordered table-hover table-striped" style="margin-top:10px;">
+    <table class="table table-bordered table-hover table-striped" style="margin:5px;">
       <thead>
         <tr>
           <th>序号</th>
@@ -63,7 +48,7 @@
           <th>操作</th>
         </tr>
       </thead>
-      <tbody v-for="(item, index) in list" :key="index">
+      <tbody v-for="(item, index) in search(keywords)" :key="index">
         <tr>
           <td>{{ item.id }}</td>
           <td>{{ item.name }}</td>
@@ -82,7 +67,7 @@
       data: {
         id: '',
         name: '',
-        keywords: '',
+        keywords: '',   // 搜索的关键字
         list: [
           { id: 1, name: '奔驰', ctime: new Date() },
           { id: 2, name: '宝马', ctime: new Date() },
@@ -91,6 +76,11 @@
       },
       methods: {
         add() {
+          if (this.id == '' || this.name == ''
+            || this.id == null || this.name == null
+            || this.id == undefined || this.name == undefined) {
+            return;
+          }
           var car = { id: this.id, name: this.name, ctime: new Date() };
           this.list.push(car);
           // 清空数据
@@ -120,11 +110,24 @@
             }
           });
           this.list.splice(index, 1);
+        },
+        search(keywords) {
+          var newList = [];
+          // 第一种方法：forEach方法
+          // this.list.forEach(item => {
+          //   if (item.name.indexOf(keywords) != -1) {
+          //     newList.push(item);
+          //   }
+          // });
+          // return newList;
+
+          // 第二种方法：filter
+          return this.list.filter(item => {
+            if (item.name.includes(keywords)) {
+              return item;
+            }
+          });
         }
-      },
-
-      watch() {
-
       }
     });
   </script>
