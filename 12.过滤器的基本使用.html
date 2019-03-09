@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>过滤器的基本使用</title>
+  <script src="./lib/vue.min.js"></script>
+</head>
+
+<body>
+  <div id="app">
+    <p>{{msg | msgFormat('疯狂++') | test}}</p>
+  </div>
+  <div id="app2">
+    <p>{{dt | dateFormat('yyyy-MM-dd hh:MM:ss')}}</p>
+  </div>
+  <script>
+    // 定义一个 Vue 全局的过滤器, 名字：msgFormat， 第一个参数永远是 | 符号之前的数据
+    Vue.filter("msgFormat", function (oldMsg, newMsg) {
+      // 正则表达式方式替换字符串
+      return oldMsg.replace(/单纯/g, newMsg);
+    });
+
+    Vue.filter("test", function (msg) {
+      return msg + "+++++++++++++++++++++++++";
+    });
+
+    var vm = new Vue({
+      el: "#app",
+      data: {
+        msg: "曾经，我也是一个单纯的少年，单纯的我，傻傻的问，谁是世界上最单纯的男人。"
+      }
+    });
+
+    var vm2 = new Vue({
+      el: "#app2",
+      data: {
+        dt: new Date()
+      },
+      filters: {
+        dateFormat: function (originalDate, pattern = "yyyy-MM-dd") {
+          var dt = new Date(originalDate);
+
+          // yyyy-MM-dd
+          var year = dt.getFullYear();
+          var month = dt.getMonth() + 1;
+          var day = dt.getDate();
+
+          if (pattern && pattern.toLowerCase() === 'yyyy-mm-dd') {
+            // return year + "-" + month + "-" + day;
+            return `${year}-${month}-${day}`;
+          } else {
+            var hours = dt.getHours();
+            var munite = dt.getMinutes();
+            var seconds = dt.getSeconds();
+            return `${year}-${month}-${day} ${hours}:${munite}:${seconds}`;
+          }
+        }
+      }
+    });
+  </script>
+</body>
+
+</html>
