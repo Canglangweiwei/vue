@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>网络请求工具vue-resource</title>
+  <script src="./lib/vue.min.js"></script>
+  <!-- vue-resource  依赖于 vue，必须放在 vue 包后面 -->
+  <script src="./lib/vue-resource-1.3.4.js"></script>
+</head>
+
+<body>
+  <div id="app">
+    <div>
+      <button @click="getData">GET请求</button>
+    </div>
+    <br>
+    <div>
+      <button @click="postData">POST请求</button>
+    </div>
+  </div>
+  <script>
+    var vm = new Vue({
+      el: "#app",
+      data: {
+        list: []
+      },
+      methods: {
+        getData() {
+          this.$http.get('http://kerys.pythonanywhere.com/api/getprodlist/')
+            .then(response => {
+              // success
+              console.log(response.body);
+            }, response => {
+              // error
+
+            });
+        },
+        postData() {
+          this.$http.post('http://kerys.pythonanywhere.com/api/addprod/', { name: '我查来' }, { emulateJSON: true })
+            .then(response => {
+              // success
+              console.log(response.body);
+            }, response => {
+              // error
+
+            });
+        }
+      }
+    });
+  </script>
+</body>
+
+</html>
