@@ -203,24 +203,25 @@
       methods: {
 
       },
-      beforeCreate() {
+      created() {
         axios.get('http://kerys.pythonanywhere.com/api/getprodlist/')
-          .then(function (response) {
+          .then(response => {
+            this.list = response.data.message;
             console.log(response);
-            if (!response) {
-              return;
-            }
-            var result = response.data;
-            if (!result) {
-              return;
-            }
-            var mList = result.message;
-            if (!mList || mList.length == 0) {
-              return;
-            }
-            this.list = mList;
+            // if (!response) {
+            //   return;
+            // }
+            // var result = response.data;
+            // if (!result) {
+            //   return;
+            // }
+            // var mList = result.message;
+            // if (!mList || mList.length == 0) {
+            //   return;
+            // }
+            // this.list = mList;
           })
-          .catch(function (error) {
+          .catch(response => {
             console.log(error);
           });
       }
