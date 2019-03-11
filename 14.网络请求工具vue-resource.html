@@ -14,13 +14,22 @@
 
 <body>
   <div id="app">
-    <div>
-      <button @click="getData">GET请求</button>
+    <div class="panel panel-primary" style="margin: 5px;">
+      <div class="panel-heading">
+        <h3 class="panel-title">添加品牌</h3>
+      </div>
+
+      <div class="panel-body form-inline" style="margin-top:10px;">
+        <label style="margin-left:10px;">
+          名称：
+          <input type="text" class="form-control" v-model="name">
+        </label>
+
+        <!--添加 -->
+        <input type="button" value="添加" class="btn btn-primary" @click="add" style="margin-left:10px;">
+      </div>
     </div>
-    <br>
-    <div>
-      <button @click="postData">POST请求</button>
-    </div>
+
     <table class="table table-bordered table-hover table-striped" style="margin:5px;">
       <thead>
         <tr>
@@ -36,7 +45,7 @@
           <td>{{ item.name }}</td>
           <td>{{ item.ctime | dateFormat("yyyy-MM-dd hh:MM:ss") }}</td>
           <td>
-            <a href="">删除</a>
+            <a href="" @click.prevent="delDataForId(item.id)">删除</a>
           </td>
         </tr>
       </tbody>
@@ -65,31 +74,64 @@
     var vm = new Vue({
       el: "#app",
       data: {
+        name: '',
         list: []
       },
       methods: {
-        getData() {
+
+        // 加载数据
+        loadData() {
           this.$http.get('http://kerys.pythonanywhere.com/api/getprodlist/')
             .then(response => {
               // success
               var result = response.body;
-              console.log(result);
               this.list = result.message;
             }, response => {
               // error
 
             });
         },
-        postData() {
-          this.$http.post('http://kerys.pythonanywhere.com/api/addprod/', { name: '我查来' }, { emulateJSON: true })
+
+        // 添加数据
+        add() {
+          if (this.name == '' || this.name == null || this.name == undefined) {
+            alert('请填写名称');
+            return;
+          }
+          this.$http.post('http://kerys.pythonanywhere.com/api/addprod/', { name: this.name }, { emulateJSON: true })
             .then(response => {
               // success
-              console.log(response.body);
+              // 清空输入框数据
+              this.name = '';
+              // 重新加载数据
+              this.loadData();
             }, response => {
               // error
+              console.log(response.body);
+            });
+        },
 
+        // 删除数据
+        delDataForId(id) {
+          if (id == '' || id == null || id == undefined) {
+            alert('id错误');
+            return;
+          }
+          this.$http.get('http://kerys.pythonanywhere.com/api/delprod/' + id)
+            .then(response => {
+              // success
+              // 重新加载数据
+              this.loadData();
+            }, response => {
+              // error
+              console.log(responese.body);
             });
         }
+      },
+
+      // 钩子函数
+      created() {
+        this.loadData();
       }
     });
   </script>
