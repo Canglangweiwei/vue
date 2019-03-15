@@ -60,27 +60,28 @@
         list: []
       },
       methods: {
-
+        loadData() {
+          axios.get('http://kerys.pythonanywhere.com/api/getprodlist/')
+            .then(response => {
+              if (!response) {
+                return;
+              }
+              var result = response.data;
+              if (!result) {
+                return;
+              }
+              var mList = result.message;
+              if (!mList || mList.length == 0) {
+                return;
+              }
+              this.list = mList;
+            }).catch(error => {
+              console.log(error);
+            });
+        }
       },
       created() {
-        axios.get('http://kerys.pythonanywhere.com/api/getprodlist/')
-          .then(response => {
-            if (!response) {
-              return;
-            }
-            var result = response.data;
-            if (!result) {
-              return;
-            }
-            var mList = result.message;
-            if (!mList || mList.length == 0) {
-              return;
-            }
-            this.list = mList;
-          })
-          .catch(response => {
-            console.log(error);
-          });
+        this.loadData();
       }
     });
   </script>

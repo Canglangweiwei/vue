@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>私有组件的定义方式</title>
+  <script src="./lib/vue.min.js"></script>
+</head>
+
+<body>
+  <div id="app1">
+    <login></login>
+  </div>
+
+  <div id="app2">
+
+  </div>
+
+  <template id="templ_01">
+    <div>
+      <h1>这是定义在 app1 中的login组件</h1>
+    </div>
+  </template>
+</body>
+
+<script>
+  var vm1 = new Vue({
+    el: '#app1',
+    data: {},
+    methods: {},
+    filters: {},
+    components: {
+      login: {
+        template: '#templ_01'
+      }
+    },
+
+    beforeCreate() {
+      console.log('beforeCreate');
+
+    },
+    created() {
+      console.log('created');
+    },
+    beforeMount() {
+      console.log('beforeMount');
+    },
+    mounted() {
+      console.log('mounted');
+    },
+    beforeUpdate() {
+      console.log('beforeUpdate');
+    },
+    updated() {
+      console.log('updated');
+    },
+    beforeDestroy() {
+      console.log('beforeDestroy');
+    },
+    destroyed() {
+      console.log('destroyed');
+    }
+  });
+
+  var vm2 = new Vue({
+    el: '#app2',
+    data: {}
+  });
+</script>
+
+</html>

@@ -52,6 +52,10 @@
     </table>
   </div>
   <script>
+    // 设置 vue-resource 的域名
+    Vue.http.options.root = 'http://kerys.pythonanywhere.com/';
+    // 设置全局启用 emulateJSON 选项
+    Vue.http.options.emulateJSON = true;
     // 注册全局时间过滤器
     Vue.filter("dateFormat", function (date, pattern = "yyyy-MM-dd hh:MM:ss") {
       var dt = new Date(date);
@@ -77,15 +81,25 @@
         name: '',
         list: []
       },
+
+      // 钩子函数
+      created() {
+        // 加载数据
+        this.loadData();
+      },
+
+      // 方法
       methods: {
 
         // 加载数据
         loadData() {
-          this.$http.get('http://kerys.pythonanywhere.com/api/getprodlist/')
+          this.$http.get('api/getprodlist/')
             .then(response => {
               // success
               var result = response.body;
-              this.list = result.message;
+              if (result.status == 'success') {
+                this.list = result.message;
+              }
             }, response => {
               // error
 
@@ -98,13 +112,17 @@
             alert('请填写名称');
             return;
           }
-          this.$http.post('http://kerys.pythonanywhere.com/api/addprod/', { name: this.name }, { emulateJSON: true })
+          this.$http.post('api/addprod/', { name: this.name })
             .then(response => {
               // success
-              // 清空输入框数据
-              this.name = '';
-              // 重新加载数据
-              this.loadData();
+              var result = response.body;
+              if (result.status == 'success') {
+                // success
+                // 清空输入框数据
+                this.name = '';
+                // 重新加载数据
+                this.loadData();
+              }
             }, response => {
               // error
               console.log(response.body);
@@ -117,21 +135,19 @@
             alert('id错误');
             return;
           }
-          this.$http.get('http://kerys.pythonanywhere.com/api/delprod/' + id)
+          this.$http.get('api/delprod/' + id)
             .then(response => {
               // success
-              // 重新加载数据
-              this.loadData();
+              var result = response.body;
+              if (result.status === 'success') {
+                // 重新加载数据
+                this.loadData();
+              }
             }, response => {
               // error
               console.log(responese.body);
             });
         }
-      },
-
-      // 钩子函数
-      created() {
-        this.loadData();
       }
     });
   </script>

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>组件切换方式一</title>
+  <script src="./lib/vue.min.js"></script>
+</head>
+
+<body>
+  <div id="app">
+    <a href="" @click.prevent="flag = 0">登录</a>
+    <a href="" @click.prevent="flag = 1">注册</a>
+
+    <login v-if="flag === 0"></login>
+    <signup v-else="flag === 1"></signup>
+  </div>
+
+  <template id="templ_01">
+    <div>
+      <h1>登录组件</h1>
+    </div>
+  </template>
+  <template id="templ_02">
+    <div>
+      <h1>注册组件</h1>
+    </div>
+  </template>
+</body>
+<script>
+  Vue.component('login', {
+    template: "#templ_01"
+  });
+  Vue.component('signup', {
+    template: "#templ_02"
+  });
+  var vm = new Vue({
+    el: "#app",
+    data: {
+      flag: 0
+    },
+    methods: {
+
+    }
+  });
+</script>
+
+</html>
