@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>组件切换-切换动画</title>
+  <script src="./lib/vue.min.js"></script>
+  <style>
+    .v-enter,
+    .v-leave-to {
+      opacity: 0;
+      transform: translateX(150px)
+    }
+
+    .v-enter-active,
+    .v-leave-active {
+      transition: all 0.5s ease;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="app">
+    <a href="" @click.prevent="componentName = 'login'">登录</a>
+    <a href="" @click.prevent="componentName = 'signup'">注册</a>
+
+    <!-- 实现动画过渡 -->
+    <transition mode='out-in'>
+      <!-- 实现组件切换 -->
+      <component :is='componentName'></component>
+    </transition>
+  </div>
+  <!-- template -->
+  <template id="templ_01">
+    <div>
+      <h1>这是登录组件</h1>
+    </div>
+  </template>
+  <template id="templ_02">
+    <div>
+      <h1>这是注册组件</h1>
+    </div>
+  </template>
+</body>
+<script>
+  Vue.component('login', {
+    template: '#templ_01'
+  });
+  Vue.component('signup', {
+    template: '#templ_02'
+  });
+
+  var vm = new Vue({
+    el: '#app',
+    data: {
+      componentName: 'login'
+    }
+  });
+</script>
+
+</html>
