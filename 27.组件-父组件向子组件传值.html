@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>父组件向子组件传值</title>
+  <script src="./lib/vue.min.js"></script>
+</head>
+
+<body>
+  <div id="app">
+    <mychild1 :parentmsg="msg"></mychild1>
+  </div>
+
+  <template id="templ_01">
+    <div>
+      <h1>{{title}}</h1>
+      <h3>子组件 ----- {{parentmsg}}</h3>
+    </div>
+  </template>
+</body>
+<script>
+  var vm = new Vue({
+    el: '#app',
+    data: {
+      msg: '父组件的数据，子组件能获取到吗?(Y/N)'
+    },
+    // 私有组件
+    components: {
+      // 定义一个子组件 - mychild1
+      mychild1: {
+        // 组件中的 data 属性必须是一个 function 而且 data 中的数据都是子组件私有的属性数据，data 中的数据可读可写，但是 props 中的数据只读(他是父组件传递过来的)
+        data() {
+          return {
+            title: '这是子组件'
+          }
+        },
+        // 组件中所有 props 中的数据都是由父组件传递过来的
+        props: {
+          parentmsg: {
+            type: String,
+            required: true
+          }
+        },
+        template: '#templ_01'
+      }
+    }
+  });
+</script>
+
+</html>
