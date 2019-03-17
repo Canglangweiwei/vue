@@ -15,3 +15,9 @@ http://kerys.pythonanywhere.com/api/addprod/
 http://kerys.pythonanywhere.com/api/delprod/id
 
 调用方式: GET 请求 id 是品牌的id int类型
+
+
+
+http://www.liulongbin.top:3005/api/getlunbo
+调用方式: GET 请求
+测试接口
