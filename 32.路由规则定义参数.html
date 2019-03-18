@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <script src="./lib/vue.min.js"></script>
+  <script src="./lib/vue-router.js"></script>
+  <title>路由规则中定义参数</title>
+</head>
+
+<body>
+  <div id="app">
+    <router-link to="/login">登录</router-link>
+    <router-link to="/register?id=13&name=张三">注册</router-link>
+    <router-view></router-view>
+  </div>
+
+  <!-- 登录模板 -->
+  <template id="templ_login">
+    <h1>=== 登录组件模板</h1>
+  </template>
+
+  <!-- 注册模板 -->
+  <template id="templ_register">
+    <h1>+++ 注册组件模板 ---- 姓名：{{name}}，ID：{{id}}</h1>
+  </template>
+</body>
+<script>
+  // 定义登录组件
+  var login = {
+    template: '#templ_login'
+  };
+
+  // 定义注册组件
+  var register = {
+    template: '#templ_register',
+    data() {
+      return {
+        name: '',
+        id: ''
+      }
+    },
+    created() {
+      this.name = this.$route.query.name;
+      this.id = this.$route.query.id;
+    }
+  };
+  // 定义路由
+  var router = new VueRouter({
+    routes: [
+      { path: '/', redirect: '/login' },
+      { path: '/login', component: login },
+      { path: '/register', component: register }
+    ]
+  });
+
+  // 实例化 Vue 
+  var vm = new Vue({
+    router,
+    data: {},
+    methods: {},
+    components: {
+      login,
+      register
+    }
+  }).$mount('#app');
+</script>
+
+</html>

@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>路由的基本使用</title>
+  <script src="./lib/vue.min.js"></script>
+  <!-- 1. 安装 vue-router 模块儿 -->
+  <script src="./lib/vue-router.js"></script>
+</head>
+
+<body>
+  <div id="app">
+    <a href="#/login">登录</a>
+    <a href="#/register">注册</a>
+    <router-view></router-view>
+  </div>
+
+  <!-- 登录 -->
+  <template id="templ_login">
+    <h1>{{l_title}}</h1>
+  </template>
+
+  <!-- 注册 -->
+  <template id="templ_register">
+    <h1>{{r_title}}</h1>
+  </template>
+</body>
+<script>
+  // 登录组件
+  var login = {
+    template: '#templ_login',
+    data() {
+      return {
+        l_title: '这是登录组件'
+      }
+    }
+  };
+
+  // 注册组件
+  var register = {
+    template: '#templ_register',
+    data() {
+      return {
+        r_title: '这是注册组件'
+      }
+    }
+  };
+  // 2. 创建路由对象,当导入 vue-router 包之后，在 window 全局对象中，就有一个路由的构造函数，叫做 VueRouter 
+  // 在 new 路由对象的时候,可以为构造函数传递一个配置对象
+  var router = new VueRouter({
+    // route 表示【路由匹配规则】
+    routes: [
+      // 每个路由规则都是一个对象，这个规则对象身上有两个必须属性：
+      { path: '/login', component: login },
+      { path: '/register', component: register }
+    ]
+  })
+
+  // 实例化 Vue
+  var vm = new Vue({
+    el: '#app',
+    data: {},
+    methods: {},
+    // 将路由规则对象，注册到 vue 实例上，用来监听 URL 地址的变化，然后展示对应组件
+    router,
+    components: {
+      login,
+      register
+    }
+  });
+</script>
+
+</html>
