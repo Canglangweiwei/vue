@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>评论列表</title>
+  <script src="./lib/vue.min.js"></script>
+  <link rel="stylesheet" href="./css/bootstrap-3.3.7.css">
+</head>
+
+<body>
+  <div id="app">
+    <review-box @func_publish="loadComments"></review-box>
+    <ul class="list-group" style="margin:5px;">
+      <li class="list-group-item" v-for="item in list" :key="item.id">
+        <span class="badge">评论人：{{item.username}}</span>
+        {{item.content}}
+      </li>
+    </ul>
+  </div>
+
+  <!-- 发布评论的子组件 -->
+  <template id="templ">
+    <div style="margin:15px;">
+      <div class="form-group">
+        <label>评论人：</label>
+        <input type="text" class="form-control" v-model="publishname">
+      </div>
+
+      <div class="form-group">
+        <label>评论内容：</label>
+        <textarea class="form-control" v-model="publishcontent"></textarea>
+      </div>
+
+      <div class="form-group">
+        <input type="button" value="发表评论" class="btn btn-primary" @click="publish">
+      </div>
+    </div>
+  </template>
+</body>
+<script>
+  // 定义发布评论组件
+  var reviewsbox = {
+    template: '#templ',
+    data() {
+      return {
+        // 评论人
+        publishname: '',
+        // 评论内容
+        publishcontent: ''
+      }
+    },
+    methods: {
+      // 发布评论方法
+      publish() {
+        // 分析：发表评论的业务逻辑
+        // 1. 评论数据存放到哪里去？？？   存放到了 localStorage 中
+        // 2. 先组织处一个最新的评论数据对象
+        // 3. 想办法，把第二步中得到的评论对象，保存到 localStorage 中 localStorage.setItem(key, value);
+        // 3.1 localStorage 只支持存放字符串数据，要先调用 JSON.stringify
+        // 3.2 在保存的最新的评论数据之前，要先从 localStorage 获取到之前的评论数据(String)转换为一个数据对象，然后把最新的评论，push 到这个数组中。
+        // 3.3 如果获取到 localStorage 中的评论字符串为空或不存在，则可以返回一个 '[]' 让 JSON.parse 去转换
+        // 3.4 把最新的评论列表数组，再次调用 JSON.stringify 转换为数组字符串，然后调用 localStorage.setItem()
+        if (this.publishname == null
+          || this.publishname == ''
+          || this.publishname == undefined) {
+          alert('发布人不能为空');
+          return;
+        }
+        if (this.publishcontent == null
+          || this.publishcontent == ''
+          || this.publishcontent == undefined) {
+          alert('发布内容不能为空');
+          return;
+        }
+        // 封装实体类
+        var reviews = { id: Date.now(), username: this.publishname, content: this.publishcontent };
+        // 从 localStorage 获取序列化数据
+        var list = JSON.parse(localStorage.getItem('comments') || '[]');
+        list.push(reviews);
+        // 将 list 序列化后的数据存放到 localStorage 中
+        localStorage.setItem('comments', JSON.stringify(list));
+        // 清空相关数据
+        this.publishname = this.publishcontent = '';
+        // 将评论实体类传递给父组件
+        this.$emit('func_publish');
+      }
+    }
+  };
+
+  // 实例化 Vue 
+  var vm = new Vue({
+    el: '#app',
+    components: {
+      'review-box': reviewsbox
+    },
+    data: {
+      list: []
+    },
+    methods: {
+      // 从本地加载评论列表
+      loadComments() {
+        // 从 localStorage 获取序列化数据
+        this.list = JSON.parse(localStorage.getItem('comments') || '[]');
+      }
+    },
+
+    created() {
+      // 从本地加载评论列表
+      this.loadComments();
+    }
+  });
+</script>
+
+</html>
