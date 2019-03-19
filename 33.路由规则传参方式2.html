@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>路有规则传参方式-2</title>
+  <script src="./lib/vue.min.js"></script>
+  <script src="./lib/vue-router.js"></script>
+</head>
+
+<body>
+  <div id="app">
+    <router-link to="/home">首页</router-link>
+    <router-link to="/about/33/张三">关于我</router-link>
+    <router-view></router-view>
+  </div>
+
+  <template id="templ_01">
+    <div>
+      <h1>首页</h1>
+    </div>
+  </template>
+
+  <template id="templ_02">
+    <div>
+      <h1>关于我 ---- {{id}} +++++ {{name}}</h1>
+    </div>
+  </template>
+</body>
+<script>
+
+  // 组件一：首页
+  var home = {
+    template: '#templ_01'
+  };
+
+  // 组件二：关于我
+  var about = {
+    template: '#templ_02',
+    data() {
+      return {
+        id: '',
+        name: ''
+      }
+    },
+    created() {
+      this.id = this.$route.params.id;
+      this.name = this.$route.params.name;
+    }
+  };
+
+  // 路由
+  var router = new VueRouter({
+    routes: [
+      { path: '/', redirect: '/home' },
+      { path: '/home', component: home },
+      { path: '/about/:id/:name', component: about }
+    ]
+  });
+
+  // 实例化 Vue 
+  var vm = new Vue({
+    data: {},
+    router,
+    components: {
+      home,
+      about
+    }
+  }).$mount('#app');
+</script>
+
+</html>
