@@ -14,6 +14,7 @@
     <mychild1 :parentmsg="msg"></mychild1>
   </div>
 
+  <!-- 子组件模板 -->
   <template id="templ_01">
     <div>
       <h1>{{title}}</h1>
@@ -22,6 +23,26 @@
   </template>
 </body>
 <script>
+  // 定义一个子组件 - mychild1
+  var mychild1 = {
+    // 模板
+    template: '#templ_01',
+    // 组件中的 data 属性必须是一个 function 而且 data 中的数据都是子组件私有的属性数据，data 中的数据可读可写，但是 props 中的数据只读(他是父组件传递过来的)
+    data() {
+      return {
+        title: '这是子组件'
+      }
+    },
+    // 组件中所有 props 中的数据都是由父组件传递过来的
+    props: {
+      parentmsg: {
+        type: String,
+        required: true
+      }
+    }
+  };
+
+  // 实例化 Vue
   var vm = new Vue({
     el: '#app',
     data: {
@@ -29,23 +50,7 @@
     },
     // 私有组件
     components: {
-      // 定义一个子组件 - mychild1
-      mychild1: {
-        // 组件中的 data 属性必须是一个 function 而且 data 中的数据都是子组件私有的属性数据，data 中的数据可读可写，但是 props 中的数据只读(他是父组件传递过来的)
-        data() {
-          return {
-            title: '这是子组件'
-          }
-        },
-        // 组件中所有 props 中的数据都是由父组件传递过来的
-        props: {
-          parentmsg: {
-            type: String,
-            required: true
-          }
-        },
-        template: '#templ_01'
-      }
+      mychild1
     }
   });
 </script>
