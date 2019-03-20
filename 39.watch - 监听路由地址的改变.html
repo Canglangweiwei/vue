@@ -51,7 +51,17 @@
   var vm = new Vue({
     data: {},
     methods: {},
-    router
+    router,
+    // 监听事件
+    watch: {
+      '$route.path': function (newVal, oldVal) {
+        if (newVal === '/home') {
+          console.log('欢迎来到 xxx 管理系统');
+        } else if (newVal === '/about') {
+          console.log('欢迎来到介绍页面');
+        }
+      }
+    }
   }).$mount('#app');
 </script>
 

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>名称案例 - 方式3（computed）</title>
+  <script src="./lib/vue.min.js"></script>
+  <link rel="stylesheet" href="./css/bootstrap-3.3.7.css">
+</head>
+
+<body>
+  <div id="app">
+    <div class="panel-body form-inline" style="margin-top:10px;">
+      <input type="text" class="form-control" v-model="firstname">
+      <label> + </label>
+      <input type="text" class="form-control" v-model="lastname">
+      <label> = </label>
+      <input type="text" class="form-control" v-model="fullname">
+    </div>
+  </div>
+</body>
+<script>
+  var vm = new Vue({
+    data: {
+      firstname: '',
+      lastname: ''
+    },
+    methods: {},
+    // 异步：在 computed 中可以定义一些属性，这些属性叫做【计算属性】；
+    // 计算属性的本质就是一个方法，只不过我们在使用这些计算属性的时候是把他们的名称直接当作属性使用的，并不会把计算属性当作方法来调用。
+    computed: {
+      // 注意1：计算属性在引用的时候，一定不要加 () 去调用，直接把它当作普通属性去使用就好了
+      // 注意2：只要计算属性，在这个 function 内部，所用到的任何 data 中的数据发生了变化就会立即计算这个计算属性的值。
+      // 注意3：计算属性的求值结果会被缓存起来，方便下次直接使用；如果计算属性方法中所依赖的任何数据都没有发生任何变化，则不会重新对计算属性求值。
+      'fullname': function () {
+        return this.firstname + ' - ' + this.lastname;
+      }
+    }
+  }).$mount('#app');
+</script>
+
+</html>
