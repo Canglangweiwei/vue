@@ -10,19 +10,19 @@
 </head>
 
 <body>
-  <div id="app">
-    <mycom2></mycom2>
-  </div>
-  <script>
-    Vue.component('mycom2', {
-      template: '<div><h1>这是直接使用 Vue.component 创建出来的组件</h1></div>'
-    });
-    var vm = new Vue({
-      el: "#app",
-      data: {},
-      methods: {}
-    });
-  </script>
+<div id="app">
+  <mycom2/>
+</div>
+<script>
+  Vue.component('mycom2', {
+    template: '<div><h1>这是直接使用 Vue.component 创建出来的组件</h1></div>'
+  });
+  var vm = new Vue({
+    el: "#app",
+    data: {},
+    methods: {}
+  });
+</script>
 </body>
 
 </html>

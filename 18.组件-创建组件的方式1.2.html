@@ -10,31 +10,30 @@
 </head>
 
 <body>
-  <div id="app">
-    <mycom1></mycom1>
-  </div>
-  <script>
-    // 1.1 使用 Vue.extend 来创建全局组件
+<div id="app">
+  <mycom1/>
+</div>
+<script>
+  // 1.1 使用 Vue.extend 来创建全局组件
 
-    // 定义组件
-    // 方式一：驼峰命名法
-    // Vue.component('myCom1', com1);
-    // 方式二：普通命名法
-    Vue.component('mycom1', Vue.extend({
+  // 定义组件
+  // 方式一：驼峰命名法
+  // Vue.component('myCom1', com1);
+  // 方式二：普通命名法
+  Vue.component(
+    'mycom1',
+    Vue.extend({
       template: '<h1>这是使用 Vue.extend 创建的组件</h1>'
-    }));
+    })
+  );
 
-    // 定义 Vue
-    var vm = new Vue({
-      el: "#app",
-      data: {
-
-      },
-      methods: {
-
-      }
-    });
-  </script>
+  // 定义 Vue
+  var vm = new Vue({
+    el: "#app",
+    data: {},
+    methods: {}
+  });
+</script>
 </body>
 
 </html>

@@ -1,4 +1,4 @@
-2<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -9,41 +9,41 @@
 </head>
 
 <body>
-  <button>按钮1</button>
-  <button>按钮2</button>
-  <button>按钮3</button>
-  <button>按钮4</button>
-  <button>按钮5</button>
+<button>按钮1</button>
+<button>按钮2</button>
+<button>按钮3</button>
+<button>按钮4</button>
+<button>按钮5</button>
 
-  <script>
-    {
-      // var btns = document.querySelectorAll('button');
+<script>
+  {
+    // var btns = document.querySelectorAll('button');
 
-      // // 第一种不能达到预期效果(var)
-      // for (var i = 0; i < btns.length; i++) {
-      //   btns[i].onclick = function () {
-      //     alert('我点击了第【' + i + '】个');
-      //   };
-      // }
+    // // 第一种不能达到预期效果(var)
+    // for (var i = 0; i < btns.length; i++) {
+    //   btns[i].onclick = function () {
+    //     alert('我点击了第【' + i + '】个');
+    //   };
+    // }
 
-      // // 第二种可以正确实现
-      // for (var i = 0; i < btns.length; i++) {
-      //   (function (i) {
-      //     btns[i].onclick = function () {
-      //       alert('我点击了第【' + i + '】个');
-      //     };
-      //   })(i);
-      // }
+    // // 第二种可以正确实现
+    // for (var i = 0; i < btns.length; i++) {
+    //   (function (i) {
+    //     btns[i].onclick = function () {
+    //       alert('我点击了第【' + i + '】个');
+    //     };
+    //   })(i);
+    // }
 
-      // 第三种也可以正确实现(let)
-      let btns = document.querySelectorAll('button');
-      for (let i = 0; i < btns.length; i++) {
-        btns[i].onclick = function () {
-          alert('我点击了第【' + i + '】个');
-        };
-      }
+    // 第三种也可以正确实现(let)
+    let btns = document.querySelectorAll('button');
+    for (let i = 0; i < btns.length; i++) {
+      btns[i].onclick = function () {
+        alert('我点击了第【' + i + '】个');
+      };
     }
-  </script>
+  }
+</script>
 </body>
 
 </html>

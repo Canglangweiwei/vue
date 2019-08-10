@@ -10,24 +10,24 @@
 </head>
 
 <body>
-  <div id="app">
-    <a href="" @click.prevent="flag = 0">登录</a>
-    <a href="" @click.prevent="flag = 1">注册</a>
+<div id="app">
+  <a href="" @click.prevent="flag = 0">登录</a>
+  <a href="" @click.prevent="flag = 1">注册</a>
 
-    <login v-if="flag === 0"></login>
-    <signup v-else="flag === 1"></signup>
+  <login v-if="flag === 0"></login>
+  <signup v-else="flag === 1"></signup>
+</div>
+
+<template id="templ_01">
+  <div>
+    <h1>登录组件</h1>
   </div>
-
-  <template id="templ_01">
-    <div>
-      <h1>登录组件</h1>
-    </div>
-  </template>
-  <template id="templ_02">
-    <div>
-      <h1>注册组件</h1>
-    </div>
-  </template>
+</template>
+<template id="templ_02">
+  <div>
+    <h1>注册组件</h1>
+  </div>
+</template>
 </body>
 <script>
   Vue.component('login', {
@@ -41,9 +41,7 @@
     data: {
       flag: 0
     },
-    methods: {
-
-    }
+    methods: {}
   });
 </script>
 

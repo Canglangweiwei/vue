@@ -10,48 +10,48 @@
 </head>
 
 <body>
-  <div id="app">
-    <ul v-if="list.length > 0" :style="liStyle">
-      <div v-for="(item, index) in list" :key="index">
-        <li v-show="item.age > 18">
-          姓名：{{item.name}}，年龄：{{item.age}}，位于数组中第：{{index}}
-        </li>
-      </div>
-    </ul>
-  </div>
-  <script>
-    var vm = new Vue({
-      el: "#app",
-      data: {
-        liStyle: {
-          color: 'red',
-          textShadow: '0 0 10px yellowgreen'
+<div id="app">
+  <ul v-if="list.length > 0" :style="liStyle">
+    <div v-for="(item, index) in list" :key="index">
+      <li v-show="item.age > 18">
+        姓名：{{item.name}}，年龄：{{item.age}}，位于数组中第：{{index}}
+      </li>
+    </div>
+  </ul>
+</div>
+<script>
+  var vm = new Vue({
+    el: "#app",
+    data: {
+      liStyle: {
+        color: 'red',
+        textShadow: '0 0 10px yellowgreen'
+      },
+      list: [
+        {
+          name: "张三",
+          age: 19
         },
-        list: [
-          {
-            name: "张三",
-            age: 19
-          },
-          {
-            name: "李四",
-            age: 20
-          },
-          {
-            name: "王五",
-            age: 17
-          },
-          {
-            name: "赵六",
-            age: 23
-          },
-          {
-            name: "马奇",
-            age: 18
-          }
-        ]
-      }
-    });
-  </script>
+        {
+          name: "李四",
+          age: 20
+        },
+        {
+          name: "王五",
+          age: 17
+        },
+        {
+          name: "赵六",
+          age: 23
+        },
+        {
+          name: "马奇",
+          age: 18
+        }
+      ]
+    }
+  });
+</script>
 </body>
 
 </html>

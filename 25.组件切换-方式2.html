@@ -10,25 +10,25 @@
 </head>
 
 <body>
-  <div id="app">
-    <a href="" @click.prevent="componentId = 'login'">登录</a>
-    <a href="" @click.prevent="componentId = 'signup'">注册</a>
+<div id="app">
+  <a href="" @click.prevent="componentId = 'login'">登录</a>
+  <a href="" @click.prevent="componentId = 'signup'">注册</a>
 
-    <!-- Vue 提供了 component 来展示对应名称的组件 -->
-    <!-- component 是一个占位符，:is 属性，可以用来指定要展示的组件的名称 -->
-    <component :is="componentId"></component>
+  <!-- Vue 提供了 component 来展示对应名称的组件 -->
+  <!-- component 是一个占位符，:is 属性，可以用来指定要展示的组件的名称 -->
+  <component :is="componentId"></component>
+</div>
+
+<template id="templ_01">
+  <div>
+    <h1>登录组件</h1>
   </div>
-
-  <template id="templ_01">
-    <div>
-      <h1>登录组件</h1>
-    </div>
-  </template>
-  <template id="templ_02">
-    <div>
-      <h1>注册组件</h1>
-    </div>
-  </template>
+</template>
+<template id="templ_02">
+  <div>
+    <h1>注册组件</h1>
+  </div>
+</template>
 </body>
 <script>
   Vue.component('login', {
@@ -42,9 +42,7 @@
     data: {
       componentId: 'login'
     },
-    methods: {
-
-    }
+    methods: {}
   });
 </script>
 

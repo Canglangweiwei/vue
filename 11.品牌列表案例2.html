@@ -11,146 +11,144 @@
 </head>
 
 <body>
-  <div id="app">
-    <div class="panel panel-primary" style="margin: 5px;">
-      <div class="panel-heading">
-        <h3 class="panel-title">添加品牌</h3>
-      </div>
-
-      <div class="panel-body form-inline" style="margin-top:10px;">
-        <label style="margin-left:10px;">
-          序号：
-          <input type="text" class="form-control" v-model="id">
-        </label>
-
-        <label style="margin-left:10px;">
-          车名：
-          <input type="text" class="form-control" v-model="name">
-        </label>
-
-        <!--添加 -->
-        <input type="button" value="添加" class="btn btn-primary" @click="add" style="margin-left:10px;">
-
-        <!-- 搜索关键字 -->
-        <label style="margin-left:10px;">
-          搜索关键字：
-          <input type="text" class="form-control" v-model="keywords">
-        </label>
-      </div>
+<div id="app">
+  <div class="panel panel-primary" style="margin: 5px;">
+    <div class="panel-heading">
+      <h3 class="panel-title">添加品牌</h3>
     </div>
 
-    <table class="table table-bordered table-hover table-striped" style="margin:5px;">
-      <thead>
-        <tr>
-          <th>序号</th>
-          <th>车名</th>
-          <th>时间</th>
-          <th>操作</th>
-        </tr>
-      </thead>
-      <tbody v-for="(item, index) in search(keywords)" :key="index">
-        <tr>
-          <td>{{ item.id }}</td>
-          <td>{{ item.name }}</td>
-          <td>{{ item.ctime | dateFormat('yyyy-MM-dd hh:MM:ss') }}</td>
-          <td>
-            <a href="" @click.prevent="delForId(item.id)">删除</a>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+    <div class="panel-body form-inline" style="margin-top:10px;">
+      <label style="margin-left:10px;">
+        序号：
+        <input type="text" class="form-control" v-model="id">
+      </label>
+
+      <label style="margin-left:10px;">
+        车名：
+        <input type="text" class="form-control" v-model="name">
+      </label>
+
+      <!--添加 -->
+      <input type="button" value="添加" class="btn btn-primary" @click="add" style="margin-left:10px;">
+
+      <!-- 搜索关键字 -->
+      <label style="margin-left:10px;">
+        搜索关键字：
+        <input type="text" class="form-control" v-model="keywords">
+      </label>
+    </div>
   </div>
 
-  <script>
-    // 定义一个全局的时间格式化过滤器
-    Vue.filter("dateFormat", function (dateStr, pattern = "yyyy-MM-dd") {
-      var dt = new Date(dateStr);
+  <table class="table table-bordered table-hover table-striped" style="margin:5px;">
+    <thead>
+    <tr>
+      <th>序号</th>
+      <th>车名</th>
+      <th>时间</th>
+      <th>操作</th>
+    </tr>
+    </thead>
+    <tbody v-for="(item, index) in search(keywords)" :key="index">
+    <tr>
+      <td>{{ item.id }}</td>
+      <td>{{ item.name }}</td>
+      <td>{{ item.ctime | dateFormat('yyyy-MM-dd hh:MM:ss') }}</td>
+      <td>
+        <a href="" @click.prevent="delForId(item.id)">删除</a>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>
 
-      // yyyy-MM-dd
-      var year = dt.getFullYear();
-      var month = dt.getMonth() + 1;
-      var day = dt.getDate();
+<script>
+  // 定义一个全局的时间格式化过滤器
+  Vue.filter("dateFormat", function (dateStr, pattern = "yyyy-MM-dd") {
+    var dt = new Date(dateStr);
 
-      if (pattern && pattern.toLowerCase() === 'yyyy-mm-dd') {
-        // return year + "-" + month + "-" + day;
-        return `${year}-${month}-${day}`;
-      } else {
-        var hours = dt.getHours();
-        var munite = dt.getMinutes();
-        var seconds = dt.getSeconds();
-        return `${year}-${month}-${day} ${hours}:${munite}:${seconds}`;
-      }
-    })
+    // yyyy-MM-dd
+    var year = dt.getFullYear();
+    var month = dt.getMonth() + 1;
+    var day = dt.getDate();
 
-    var vm = new Vue({
-      el: '#app',
-      data: {
-        id: '',
-        name: '',
-        keywords: '',   // 搜索的关键字
-        list: [
-          { id: 1, name: '奔驰', ctime: new Date() },
-          { id: 2, name: '宝马', ctime: new Date() },
-          { id: 3, name: '奥迪', ctime: new Date() }
-        ]
-      },
-      methods: {
-        add() {
-          if (this.id == '' || this.name == ''
-            || this.id == null || this.name == null
-            || this.id == undefined || this.name == undefined) {
-            return;
-          }
-          var car = { id: this.id, name: this.name, ctime: new Date() };
-          this.list.push(car);
-          // 清空数据
-          this.id = this.name = '';
-        },
+    if (pattern && pattern.toLowerCase() === 'yyyy-mm-dd') {
+      // return year + "-" + month + "-" + day;
+      return `${year}-${month}-${day}`;
+    } else {
+      var hours = dt.getHours();
+      var munite = dt.getMinutes();
+      var seconds = dt.getSeconds();
+      return `${year}-${month}-${day} ${hours}:${munite}:${seconds}`;
+    }
+  });
 
-        // 下面提供了两种删除方式：
-        // 1、直接根据下标删除数据（更简单）
-        del(index) {
-          // 根据下标删除数据
-          this.list.splice(index, 1);
-        },
-
-        // 2、根据ID查询出数据在列表中的下标，然后删除（多了一步遍历查询过程，复杂一些）
-        delForId(id) {
-          // 1、some(遍历数据)
-          // this.list.some((item, index) => {
-          //   if (item.id == id) {
-          //     this.list.splice(index, 1);
-          //     return true;
-          //   }
-          // });
-          // 2、findIndex（专门提供用来查询索引，功能比较单一）
-          var index = this.list.findIndex(item => {
-            if (item.id == id) {
-              return true;
-            }
-          });
-          this.list.splice(index, 1);
-        },
-        search(keywords) {
-          var newList = [];
-          // 第一种方法：forEach方法
-          // this.list.forEach(item => {
-          //   if (item.name.indexOf(keywords) != -1) {
-          //     newList.push(item);
-          //   }
-          // });
-          // return newList;
-
-          // 第二种方法：filter
-          return this.list.filter(item => {
-            if (item.name.includes(keywords)) {
-              return item;
-            }
-          });
+  var vm = new Vue({
+    el: '#app',
+    data: {
+      id: '',
+      name: '',
+      keywords: '',   // 搜索的关键字
+      list: [
+        {id: 1, name: '奔驰', ctime: new Date()},
+        {id: 2, name: '宝马', ctime: new Date()},
+        {id: 3, name: '奥迪', ctime: new Date()}
+      ]
+    },
+    methods: {
+      add() {
+        if (!this.id || !this.name) {
+          return;
         }
+        var car = {id: this.id, name: this.name, ctime: new Date()};
+        this.list.push(car);
+        // 清空数据
+        this.id = this.name = '';
+      },
+
+      // 下面提供了两种删除方式：
+      // 1、直接根据下标删除数据（更简单）
+      del(index) {
+        // 根据下标删除数据
+        this.list.splice(index, 1);
+      },
+
+      // 2、根据ID查询出数据在列表中的下标，然后删除（多了一步遍历查询过程，复杂一些）
+      delForId(id) {
+        // 1、some(遍历数据)
+        // this.list.some((item, index) => {
+        //   if (item.id == id) {
+        //     this.list.splice(index, 1);
+        //     return true;
+        //   }
+        // });
+        // 2、findIndex（专门提供用来查询索引，功能比较单一）
+        var index = this.list.findIndex(item => {
+          if (item.id === id) {
+            return true;
+          }
+        });
+        this.list.splice(index, 1);
+      },
+      search(keywords) {
+        var newList = [];
+        // 第一种方法：forEach方法
+        // this.list.forEach(item => {
+        //   if (item.name.indexOf(keywords) != -1) {
+        //     newList.push(item);
+        //   }
+        // });
+        // return newList;
+
+        // 第二种方法：filter
+        return this.list.filter(item => {
+          if (item.name.includes(keywords)) {
+            return item;
+          }
+        });
       }
-    });
-  </script>
+    }
+  });
+</script>
 </body>
 
 </html>

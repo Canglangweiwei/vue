@@ -22,32 +22,34 @@
 </head>
 
 <body>
-  <div id="app">
-    <a href="" @click.prevent="componentName = 'login'">登录</a>
-    <a href="" @click.prevent="componentName = 'signup'">注册</a>
+<div id="app">
+  <a href="" @click.prevent="componentName = 'login'">登录</a>
+  <a href="" @click.prevent="componentName = 'signup'">注册</a>
 
-    <!-- 实现动画过渡 -->
-    <transition mode='out-in'>
-      <!-- 实现组件切换 -->
-      <component :is='componentName'></component>
-    </transition>
+  <!-- 实现动画过渡 -->
+  <transition mode='out-in'>
+    <!-- 实现组件切换 -->
+    <component :is='componentName'></component>
+  </transition>
+</div>
+<!-- template -->
+<template id="templ_01">
+  <div>
+    <h1>这是登录组件</h1>
   </div>
-  <!-- template -->
-  <template id="templ_01">
-    <div>
-      <h1>这是登录组件</h1>
-    </div>
-  </template>
-  <template id="templ_02">
-    <div>
-      <h1>这是注册组件</h1>
-    </div>
-  </template>
+</template>
+<template id="templ_02">
+  <div>
+    <h1>这是注册组件</h1>
+  </div>
+</template>
 </body>
 <script>
+  // 登录组件
   Vue.component('login', {
     template: '#templ_01'
   });
+  // 注册组件
   Vue.component('signup', {
     template: '#templ_02'
   });

@@ -11,22 +11,22 @@
 </head>
 
 <body>
-  <div id="app">
-    <router-link to="/login">登录</router-link>
-    <!-- 如果在路由中使用查询字符串,给路由传递参数,则不需要修改路由的 path 属性 -->
-    <router-link to="/register?id=13&name=张三">注册</router-link>
-    <router-view></router-view>
-  </div>
+<div id="app">
+  <router-link to="/login">登录</router-link>
+  <!-- 如果在路由中使用查询字符串,给路由传递参数,则不需要修改路由的 path 属性 -->
+  <router-link to="/register?id=13&name=张三">注册</router-link>
+  <router-view></router-view>
+</div>
 
-  <!-- 登录模板 -->
-  <template id="templ_login">
-    <h1>=== 登录组件模板</h1>
-  </template>
+<!-- 登录模板 -->
+<template id="templ_login">
+  <h1>=== 登录组件模板</h1>
+</template>
 
-  <!-- 注册模板 -->
-  <template id="templ_register">
-    <h1>+++ 注册组件模板 ---- 姓名：{{name}}，ID：{{id}}</h1>
-  </template>
+<!-- 注册模板 -->
+<template id="templ_register">
+  <h1>+++ 注册组件模板 ---- 姓名：{{name}}，ID：{{id}}</h1>
+</template>
 </body>
 <script>
   // 定义登录组件
@@ -51,9 +51,9 @@
   // 定义路由
   var router = new VueRouter({
     routes: [
-      { path: '/', redirect: '/login' },
-      { path: '/login', component: login },
-      { path: '/register', component: register }
+      {path: '/', redirect: '/login'},
+      {path: '/login', component: login},
+      {path: '/register', component: register}
     ]
   });
 

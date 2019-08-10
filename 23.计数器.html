@@ -10,43 +10,43 @@
 </head>
 
 <body>
-  <div id="app">
-    <counter></counter>
-    <hr>
-    <counter></counter>
-    <hr>
-    <counter></counter>
+<div id="app">
+  <counter/>
+  <hr>
+  <counter/>
+  <hr>
+  <counter/>
+</div>
+
+<template id="templ">
+  <div>
+    <input type="button" value="+1" @click="increment">
+    <h3>{{count}}</h3>
   </div>
+</template>
 
-  <template id="templ">
-    <div>
-      <input type="button" value="+1" @click="increment">
-      <h3>{{count}}</h3>
-    </div>
-  </template>
-
-  <script>
-    // 创建并定义组件
-    Vue.component('counter', {
-      template: '#templ',
-      data: function () {
-        return {
-          count: 0
-        }
-      },
-      methods: {
-        increment() {
-          this.count++;
-        }
+<script>
+  // 创建并定义组件
+  Vue.component('counter', {
+    template: '#templ',
+    data: function () {
+      return {
+        count: 0
       }
-    });
+    },
+    methods: {
+      increment() {
+        this.count++;
+      }
+    }
+  });
 
-    // 实例化 Vue
-    var vm = new Vue({
-      el: '#app',
-      data: {}
-    });
-  </script>
+  // 实例化 Vue
+  var vm = new Vue({
+    el: '#app',
+    data: {}
+  });
+</script>
 </body>
 
 </html>

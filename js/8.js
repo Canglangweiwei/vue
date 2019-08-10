@@ -4,9 +4,7 @@ var vm = new Vue({
     changeColor: false,
     changeLength: false
   },
-  methods: {
-
-  },
+  methods: {},
   // 联动
   computed: {
     compClasses: function () {

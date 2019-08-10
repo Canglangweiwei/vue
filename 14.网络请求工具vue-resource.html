@@ -13,130 +13,130 @@
 </head>
 
 <body>
-  <div id="app">
-    <div class="panel panel-primary" style="margin: 5px;">
-      <div class="panel-heading">
-        <h3 class="panel-title">添加品牌</h3>
-      </div>
-
-      <div class="panel-body form-inline" style="margin-top:10px;">
-        <label style="margin-left:10px;">
-          名称：
-          <input type="text" class="form-control" v-model="name">
-        </label>
-
-        <!--添加 -->
-        <input type="button" value="添加" class="btn btn-primary" @click="add" style="margin-left:10px;">
-      </div>
+<div id="app">
+  <div class="panel panel-primary" style="margin: 5px;">
+    <div class="panel-heading">
+      <h3 class="panel-title">添加品牌</h3>
     </div>
 
-    <table class="table table-bordered table-hover table-striped" style="margin:5px;">
-      <thead>
-        <tr>
-          <th>序号</th>
-          <th>名称</th>
-          <th>时间</th>
-          <th>操作</th>
-        </tr>
-      </thead>
-      <tbody v-for="(item, index) in list" :key="index">
-        <tr>
-          <td>{{ item.id }}</td>
-          <td>{{ item.name }}</td>
-          <td>{{ item.ctime | dateFormat("yyyy-MM-dd hh:MM:ss") }}</td>
-          <td>
-            <a href="" @click.prevent="delDataForId(item.id)">删除</a>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+    <div class="panel-body form-inline" style="margin-top:10px;">
+      <label style="margin-left:10px;">
+        名称：
+        <input type="text" class="form-control" v-model="name">
+      </label>
+
+      <!--添加 -->
+      <input type="button" value="添加" class="btn btn-primary" @click="add" style="margin-left:10px;">
+    </div>
   </div>
-  <script>
-    // 设置 vue-resource 的域名
-    Vue.http.options.root = 'http://kerys.pythonanywhere.com/';
-    // 设置全局启用 emulateJSON 选项
-    Vue.http.options.emulateJSON = true;
-    // 注册全局时间过滤器
-    Vue.filter("dateFormat", function (date, pattern = "yyyy-MM-dd hh:MM:ss") {
-      var dt = new Date(date);
 
-      // yyyy-MM-dd
-      var year = dt.getFullYear();
-      var month = dt.getMonth() + 1;
-      var day = dt.getDate();
+  <table class="table table-bordered table-hover table-striped" style="margin:5px;">
+    <thead>
+    <tr>
+      <th>序号</th>
+      <th>名称</th>
+      <th>时间</th>
+      <th>操作</th>
+    </tr>
+    </thead>
+    <tbody v-for="(item, index) in list" :key="index">
+    <tr>
+      <td>{{ item.id }}</td>
+      <td>{{ item.name }}</td>
+      <td>{{ item.ctime | dateFormat("yyyy-MM-dd hh:MM:ss") }}</td>
+      <td>
+        <a href="" @click.prevent="delDataForId(item.id)">删除</a>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+<script>
+  // 设置 vue-resource 的域名
+  Vue.http.options.root = 'http://kerys.pythonanywhere.com/';
+  // 设置全局启用 emulateJSON 选项
+  Vue.http.options.emulateJSON = true;
+  // 注册全局时间过滤器
+  Vue.filter("dateFormat", function (date, pattern = "yyyy-MM-dd hh:MM:ss") {
+    var dt = new Date(date);
 
-      if (pattern && pattern.toLowerCase() === 'yyyy-mm-dd') {
-        return `${year}-${month}-${day}`;
-      } else {
-        var hours = dt.getHours();
-        var munite = dt.getMinutes();
-        var seconds = dt.getSeconds();
-        return `${year}-${month}-${day} ${hours}:${munite}:${seconds}`;
-      }
-    });
+    // yyyy-MM-dd
+    var year = dt.getFullYear();
+    var month = dt.getMonth() + 1;
+    var day = dt.getDate();
 
-    var vm = new Vue({
-      el: "#app",
-      data: {
-        name: '',
-        list: []
+    if (pattern && pattern.toLowerCase() === 'yyyy-mm-dd') {
+      return `${year}-${month}-${day}`;
+    } else {
+      var hours = dt.getHours();
+      var munite = dt.getMinutes();
+      var seconds = dt.getSeconds();
+      return `${year}-${month}-${day} ${hours}:${munite}:${seconds}`;
+    }
+  });
+
+  var vm = new Vue({
+    el: "#app",
+    data: {
+      name: '',
+      list: []
+    },
+
+    // 钩子函数
+    created() {
+      // 加载数据
+      this.loadData();
+    },
+
+    // 方法
+    methods: {
+
+      // 加载数据
+      loadData() {
+        this.$http.get('api/getprodlist/')
+          .then(response => {
+            // success
+            var result = response.body;
+            if (result.status === 'success') {
+              this.list = result.message;
+            }
+          }, response => {
+            // error
+
+          });
       },
 
-      // 钩子函数
-      created() {
-        // 加载数据
-        this.loadData();
+      // 添加数据
+      add() {
+        if (!this.name) {
+          alert('请填写名称');
+          return;
+        }
+        this.$http.post('api/addprod/', {name: this.name})
+          .then(response => {
+            // success
+            var result = response.body;
+            if (result.status === 'success') {
+              // success
+              // 清空输入框数据
+              this.name = '';
+              // 重新加载数据
+              this.loadData();
+            }
+          }, response => {
+            // error
+            console.log(response.body);
+          });
       },
 
-      // 方法
-      methods: {
-
-        // 加载数据
-        loadData() {
-          this.$http.get('api/getprodlist/')
-            .then(response => {
-              // success
-              var result = response.body;
-              if (result.status == 'success') {
-                this.list = result.message;
-              }
-            }, response => {
-              // error
-
-            });
-        },
-
-        // 添加数据
-        add() {
-          if (this.name == '' || this.name == null || this.name == undefined) {
-            alert('请填写名称');
-            return;
-          }
-          this.$http.post('api/addprod/', { name: this.name })
-            .then(response => {
-              // success
-              var result = response.body;
-              if (result.status == 'success') {
-                // success
-                // 清空输入框数据
-                this.name = '';
-                // 重新加载数据
-                this.loadData();
-              }
-            }, response => {
-              // error
-              console.log(response.body);
-            });
-        },
-
-        // 删除数据
-        delDataForId(id) {
-          if (id == '' || id == null || id == undefined) {
-            alert('id错误');
-            return;
-          }
-          this.$http.get('api/delprod/' + id)
-            .then(response => {
+      // 删除数据
+      delDataForId(id) {
+        if (!id) {
+          alert('id错误');
+          return;
+        }
+        this.$http.get('api/delprod/' + id)
+          .then(response => {
               // success
               var result = response.body;
               if (result.status === 'success') {
@@ -146,11 +146,12 @@
             }, response => {
               // error
               console.log(responese.body);
-            });
-        }
+            }
+          );
       }
-    });
-  </script>
+    }
+  });
+</script>
 </body>
 
 </html>

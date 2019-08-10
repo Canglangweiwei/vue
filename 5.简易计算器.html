@@ -10,69 +10,73 @@
 </head>
 
 <body>
-  <div id="app">
-    <!-- 第一个输入值 -->
-    <input type="number" v-model="n1">
-    <!-- 操作符 -->
-    <select v-model="opt">
-      <option value="+">+</option>
-      <option value="-">-</option>
-      <option value="*">*</option>
-      <option value="/">/</option>
-    </select>
-    <!-- 第二个输入值 -->
-    <input type="number" v-model="n2">
-    <!-- 等于号 -->
-    <input type="button" value="=" @click="calc">
-    <!-- 结果 -->
-    <input type="number" disabled v-model="result">
-  </div>
-  <script>
-    // 初始化 Vue
-    var vm = new Vue({
-      el: "#app",
-      data: {
-        // 第一个输入值
-        n1: 0,
-        // 第二个输入值
-        n2: 0,
-        // 操作符
-        opt: "+",
-        // 结果
-        result: 0
-      },
-      methods: {
-        calc() {
-          switch (this.opt) {
-            case '+':
-              this.result = parseInt(this.n1) + parseInt(this.n2);
-              break;
-            case '-':
-              this.result = parseInt(this.n1) - parseInt(this.n2);
-              break;
-            case '*':
-              this.result = parseInt(this.n1) * parseInt(this.n2);
-              break;
-            case '/':
-              if (parseInt(this.n2) === 0) {
-                this.showToast();
-                return;
-              }
-              this.result = parseInt(this.n1) / parseInt(this.n2);
-              break;
-            default:
-              this.result = parseInt(this.n1) + parseInt(this.n2);
-              break;
-          }
-        },
+<div id="app">
+  <!-- 第一个输入值 -->
+  <input type="number" v-model="n1">
+  <!-- 操作符 -->
+  <select v-model="opt">
+    <option value="+">+</option>
+    <option value="-">-</option>
+    <option value="*">x</option>
+    <option value="/">/</option>
+  </select>
+  <!-- 第二个输入值 -->
+  <input type="number" v-model="n2">
+  <!-- 等于号 -->
+  <input type="button" value="=" @click="calc">
+  <!-- 结果 -->
+  <input type="number" disabled v-model="result">
+</div>
+<script>
+  // 初始化 Vue
+  var vm = new Vue({
+    el: "#app",
+    data: {
+      // 第一个输入值
+      n1: 0,
+      // 第二个输入值
+      n2: 0,
+      // 操作符
+      opt: "+",
+      // 结果
+      result: 0
+    },
+    methods: {
 
-        // 弹窗提醒
-        showToast() {
-          alert('除数不能为0');
+      /**
+       * 算法
+       */
+      calc() {
+        switch (this.opt) {
+          case '+':
+            this.result = parseInt(this.n1) + parseInt(this.n2);
+            break;
+          case '-':
+            this.result = parseInt(this.n1) - parseInt(this.n2);
+            break;
+          case '*':
+            this.result = parseInt(this.n1) * parseInt(this.n2);
+            break;
+          case '/':
+            if (parseInt(this.n2) === 0) {
+              this.showToast();
+              return;
+            }
+            this.result = parseInt(this.n1) / parseInt(this.n2);
+            break;
+          default:
+            this.result = parseInt(this.n1) + parseInt(this.n2);
+            break;
         }
+      },
+
+      // 弹窗提醒
+      showToast() {
+        alert('除数不能为0');
       }
-    });
-  </script>
+    }
+  });
+</script>
 </body>
 
 </html>

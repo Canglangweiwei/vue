@@ -12,79 +12,79 @@
 </head>
 
 <body>
-  <div id="app">
-    <table class="table table-bordered table-hover table-striped" style="margin:5px;">
-      <thead>
-        <tr>
-          <th>序号</th>
-          <th>名称</th>
-          <th>时间</th>
-          <th>操作</th>
-        </tr>
-      </thead>
-      <tbody v-for="(item, index) in list" :key="index">
-        <tr>
-          <td>{{ item.id }}</td>
-          <td>{{ item.name }}</td>
-          <td>{{ item.ctime | dateFormat("yyyy-MM-dd hh:MM:ss") }}</td>
-          <td>
-            <a href="">删除</a>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-  <script>
-    // 注册全局时间过滤器
-    Vue.filter("dateFormat", function (date, pattern = "yyyy-MM-dd hh:MM:ss") {
-      var dt = new Date(date);
+<div id="app">
+  <table class="table table-bordered table-hover table-striped" style="margin:5px;">
+    <thead>
+    <tr>
+      <th>序号</th>
+      <th>名称</th>
+      <th>时间</th>
+      <th>操作</th>
+    </tr>
+    </thead>
+    <tbody v-for="(item, index) in list" :key="index">
+    <tr>
+      <td>{{ item.id }}</td>
+      <td>{{ item.name }}</td>
+      <td>{{ item.ctime | dateFormat("yyyy-MM-dd hh:MM:ss") }}</td>
+      <td>
+        <a href="">删除</a>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+<script>
+  // 注册全局时间过滤器
+  Vue.filter("dateFormat", function (date, pattern = "yyyy-MM-dd hh:MM:ss") {
+    var dt = new Date(date);
 
-      // yyyy-MM-dd
-      var year = dt.getFullYear();
-      var month = dt.getMonth() + 1;
-      var day = dt.getDate();
+    // yyyy-MM-dd
+    var year = dt.getFullYear();
+    var month = dt.getMonth() + 1;
+    var day = dt.getDate();
 
-      if (pattern && pattern.toLowerCase() === 'yyyy-mm-dd') {
-        return `${year}-${month}-${day}`;
-      } else {
-        var hours = dt.getHours();
-        var munite = dt.getMinutes();
-        var seconds = dt.getSeconds();
-        return `${year}-${month}-${day} ${hours}:${munite}:${seconds}`;
+    if (pattern && pattern.toLowerCase() === 'yyyy-mm-dd') {
+      return `${year}-${month}-${day}`;
+    } else {
+      var hours = dt.getHours();
+      var munite = dt.getMinutes();
+      var seconds = dt.getSeconds();
+      return `${year}-${month}-${day} ${hours}:${munite}:${seconds}`;
+    }
+  });
+
+  var vm = new Vue({
+    el: "#app",
+    data: {
+      list: []
+    },
+    methods: {
+      loadData() {
+        axios.get('http://kerys.pythonanywhere.com/api/getprodlist/')
+          .then(response => {
+            if (!response) {
+              return;
+            }
+            var result = response.data;
+            if (!result) {
+              return;
+            }
+            var mList = result.message;
+            if (!mList || mList.length === 0) {
+              return;
+            }
+            this.list = mList;
+          }).catch(error => {
+          console.log(error);
+        });
       }
-    });
-
-    var vm = new Vue({
-      el: "#app",
-      data: {
-        list: []
-      },
-      methods: {
-        loadData() {
-          axios.get('http://kerys.pythonanywhere.com/api/getprodlist/')
-            .then(response => {
-              if (!response) {
-                return;
-              }
-              var result = response.data;
-              if (!result) {
-                return;
-              }
-              var mList = result.message;
-              if (!mList || mList.length == 0) {
-                return;
-              }
-              this.list = mList;
-            }).catch(error => {
-              console.log(error);
-            });
-        }
-      },
-      created() {
-        this.loadData();
-      }
-    });
-  </script>
+    },
+    created() {
+      this.loadData();
+    }
+  });
+</script>
 </body>
 
 </html>

@@ -11,22 +11,23 @@
 </head>
 
 <body>
-  <div id="app">
-    <router-link to="/home">首页</router-link> |
-    <router-link to="/about">关于我</router-link>
-    <router-view></router-view>
-  </div>
+<div id="app">
+  <router-link to="/home">首页</router-link>
+  |
+  <router-link to="/about">关于我</router-link>
+  <router-view></router-view>
+</div>
 
-  <template id="templ_home">
-    <div>
-      <h1>这是首页，奔波霸。</h1>
-    </div>
-  </template>
-  <template id="templ_aboutus">
-    <div>
-      <h1>这是关于我，霸波奔。</h1>
-    </div>
-  </template>
+<template id="templ_home">
+  <div>
+    <h1>这是首页，奔波霸。</h1>
+  </div>
+</template>
+<template id="templ_aboutus">
+  <div>
+    <h1>这是关于我，霸波奔。</h1>
+  </div>
+</template>
 </body>
 <script>
   // 首页
@@ -40,9 +41,9 @@
   // 定义路由
   var router = new VueRouter({
     routes: [
-      { path: '/', redirect: '/home' },
-      { path: '/home', component: home },
-      { path: '/about', component: aboutus },
+      {path: '/', redirect: '/home'},
+      {path: '/home', component: home},
+      {path: '/about', component: aboutus},
     ],
     linkActivity: 'myactive'// 和激活相关的类
   });

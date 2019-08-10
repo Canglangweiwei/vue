@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,49 +9,48 @@
 </head>
 
 <body>
-  <div id="app">
-    <input type="button" value="狼起来" @click="startMove">
-    <input type="button" value="低调" @click="stopMove">
-    <h4>{{msg}}</h4>
-  </div>
-  <script>
-    var vm = new Vue({
-      el: "#app",
-      data: {
-        msg: "猥琐发育，别浪~~！",
-        intervalId: null
-      },
-      methods: {
-
-        // 浪起来
-        startMove() {
-          // 如果this.intervalId 不为空就返回除去
-          if (this.intervalId != null) {
-            return;
-          }
-          // 开启定时器
-          this.intervalId = setInterval(() => {
-            // 获取头部字符
-            var start = this.msg.substring(0, 1);
-            // 获取后面所有的字符
-            var end = this.msg.substring(1);
-            // 重新拼接得到新的字符串，并重新赋值 this.msg
-            this.msg = end + start;
-          }, 200);
-          // 注意： vm 实例会监听自己身上的 data 中所有数据的改变，只要数据一发生编号，就会自动把最新的数据从 data 上同步到页面中去：
-          // 【程序员只需要关心数据，不需要考虑如何重新渲染 DOM】
-        },
-
-        // 低调
-        stopMove() {
-          // 清除定时器
-          clearInterval(this.intervalId);
-          // 同时，将定时器制空，以备下次可以正常开启
-          this.intervalId = null;
+<div id="app">
+  <input type="button" value="浪起来" @click="startMove">
+  <input type="button" value="低调" @click="stopMove">
+  <h4>{{msg}}</h4>
+</div>
+<script>
+  var vm = new Vue({
+    el: "#app",
+    data: {
+      msg: "猥琐发育，别浪~~！",
+      intervalId: null
+    },
+    methods: {
+      // 浪起来
+      startMove() {
+        // 如果this.intervalId 不为空就返回除去
+        if (this.intervalId != null) {
+          return;
         }
+        // 开启定时器
+        this.intervalId = setInterval(() => {
+          // 获取头部字符
+          var start = this.msg.substring(0, 1);
+          // 获取后面所有的字符
+          var end = this.msg.substring(1);
+          // 重新拼接得到新的字符串，并重新赋值 this.msg
+          this.msg = end + start;
+        }, 200);
+        // 注意： vm 实例会监听自己身上的 data 中所有数据的改变，只要数据一发生编号，就会自动把最新的数据从 data 上同步到页面中去：
+        // 【程序员只需要关心数据，不需要考虑如何重新渲染 DOM】
       },
-    });
-  </script>
+
+      // 低调
+      stopMove() {
+        // 清除定时器
+        clearInterval(this.intervalId);
+        // 同时，将定时器制空，以备下次可以正常开启
+        this.intervalId = null;
+      }
+    },
+  });
+</script>
 </body>
 
 </html>

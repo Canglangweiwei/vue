@@ -12,21 +12,21 @@
 </head>
 
 <body>
-  <div id="app">
-    <a href="#/login">登录</a>
-    <a href="#/register">注册</a>
-    <router-view></router-view>
-  </div>
+<div id="app">
+  <a href="#/login">登录</a>
+  <a href="#/register">注册</a>
+  <router-view></router-view>
+</div>
 
-  <!-- 登录 -->
-  <template id="templ_login">
-    <h1>{{l_title}}</h1>
-  </template>
+<!-- 登录 -->
+<template id="templ_login">
+  <h1>{{l_title}}</h1>
+</template>
 
-  <!-- 注册 -->
-  <template id="templ_register">
-    <h1>{{r_title}}</h1>
-  </template>
+<!-- 注册 -->
+<template id="templ_register">
+  <h1>{{r_title}}</h1>
+</template>
 </body>
 <script>
   // 登录组件
@@ -54,10 +54,10 @@
     // route 表示【路由匹配规则】
     routes: [
       // 每个路由规则都是一个对象，这个规则对象身上有两个必须属性：
-      { path: '/login', component: login },
-      { path: '/register', component: register }
+      {path: '/login', component: login},
+      {path: '/register', component: register}
     ]
-  })
+  });
 
   // 实例化 Vue
   var vm = new Vue({

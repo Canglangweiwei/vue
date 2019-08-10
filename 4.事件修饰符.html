@@ -16,27 +16,25 @@
 </head>
 
 <body>
-  <div id="app">
-    <div class="inner" @click="divHandler">
-      <input type="button" value="戳他" @click.stop="btnHandler">
-    </div>
+<div id="app">
+  <div class="inner" @click="divHandler">
+    <input type="button" value="戳他" @click.stop="btnHandler">
   </div>
-  <script>
-    var vm = new Vue({
-      el: "#app",
-      data: {
-
+</div>
+<script>
+  var vm = new Vue({
+    el: "#app",
+    data: {},
+    methods: {
+      divHandler() {
+        console.log("触发了 inner div 事件")
       },
-      methods: {
-        divHandler() {
-          console.log("触发了 inner div 事件")
-        },
-        btnHandler() {
-          console.log("触发了 btn 事件")
-        }
+      btnHandler() {
+        console.log("触发了 btn 事件")
       }
-    });
-  </script>
+    }
+  });
+</script>
 </body>
 
 </html>
